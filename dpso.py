@@ -29,9 +29,11 @@ class Particle:
         if (val < pso.global_best_val):
             pso.global_best_val = val
             pso.global_best = self.position.copy()
+            pso.improvement = True
+
         
 class PSO:
-    def __init__(self, num_particles, inertia, phi_1, phi_2, ww, wh, max_vel):
+    def __init__(self, num_particles, inertia, phi_1, phi_2, ww, wh, max_vel, tau):
         self.num_particles = num_particles
         self.inertia = inertia
         self.phi_1 = phi_1
@@ -39,6 +41,9 @@ class PSO:
         self.ww = ww
         self.wh = wh
         self.max_vel = max_vel
+        self.tau = tau
+        self.steps_since_improvement = 0
+        self.improvement = False
         self.global_best = np.array([0,0])
         self.global_best_val = None
         self.particles = []
@@ -69,6 +74,14 @@ class PSO:
         for i in range(self.num_particles):
             p = self.particles[i]
             p.update(self)
+        if (self.improvement):
+            self.steps_since_improvement = 0
+        else:
+            self.steps_since_improvement += 1
+        self.improvement = False
+
+        if (self.steps_since_improvement > self.tau):
+            self.inertia += 0.1
             
     def scatter_plot(self):
         x = []
@@ -83,6 +96,7 @@ parser.add_argument("--num_particles", default=40, type=int, help="Number of par
 parser.add_argument("--inertia", default=0.5, type=float, help="Inertia")
 parser.add_argument("--cognition", default=1, type=float, help="Cognition parameter")
 parser.add_argument("--social", default=1, type=float, help="Social parameter")
+parser.add_argument("--tau", default=10, type=int, help="Tau")
     
 args = parser.parse_args()
 # Print all of the command line arguments
@@ -91,7 +105,7 @@ for k in d.keys():
     print(k + str(":") + str(d[k]))
 
 # Create PSO
-pso = PSO(args.num_particles, args.inertia, args.cognition, args.social, 100, 100, 2)
+pso = PSO(args.num_particles, args.inertia, args.cognition, args.social, 100, 100, 2, args.tau)
 
 for i in range(1000):
     pso.update()
