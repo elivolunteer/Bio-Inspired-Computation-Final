@@ -81,7 +81,7 @@ class PSO:
         self.improvement = False
 
         if (self.steps_since_improvement > self.tau):
-            self.inertia += 0.1
+            self.phi_2 += 0.1
             
     def scatter_plot(self):
         x = []
