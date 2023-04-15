@@ -64,9 +64,9 @@ class PSO:
         x = position[0]
         y = position[1]
         # Rosenbrock (banana) function
-        #val=(1-x)**2+100*(y-x**2)**2
+        val=(1-x)**2+100*(y-x**2)**2
         # Booth Fucntion
-        val = (x+2*y-7)**2+(2*x+y-5)**2
+        #val = (x+2*y-7)**2+(2*x+y-5)**2
 
         return val
     
@@ -81,7 +81,8 @@ class PSO:
         self.improvement = False
 
         if (self.steps_since_improvement > self.tau):
-            self.phi_2 += 0.1
+            self.phi_1 -= 0.1
+            self.steps_since_improvement = 0
             
     def scatter_plot(self):
         x = []
@@ -107,15 +108,16 @@ for k in d.keys():
 # Create PSO
 pso = PSO(args.num_particles, args.inertia, args.cognition, args.social, 100, 100, 2, args.tau)
 
-for i in range(1000):
+for i in range(500):
+    print("epoch:", i)
     pso.update()
     x,y = pso.scatter_plot()
     error_x = np.sum([(pso.particles[k].position[0]-pso.global_best[0])**2 for k in range(args.num_particles)])
     error_y = np.sum([(pso.particles[k].position[1]-pso.global_best[1])**2 for k in range(args.num_particles)])
     error_x = np.sqrt((1.0/(2*args.num_particles))*error_x)
     error_y = np.sqrt((1.0/(2*args.num_particles))*error_y)
-    if (pso.global_best_val < 1e-10):
-        break
+    # if (pso.global_best_val < 1e-10):
+    #     break
     # if (error_x < 0.00001 and error_y < 0.00001):
     #     break
 

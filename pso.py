@@ -59,9 +59,9 @@ class PSO:
         x = position[0]
         y = position[1]
         # Rosenbrock (banana) function
-        #val=(1-x)**2+100*(y-x**2)**2
+        val=(1-x)**2+100*(y-x**2)**2
         # Booth Fucntion
-        val = (x+2*y-7)**2+(2*x+y-5)**2
+        #val = (x+2*y-7)**2+(2*x+y-5)**2
 
         return val
     
