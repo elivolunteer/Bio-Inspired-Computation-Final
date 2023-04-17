@@ -6,7 +6,7 @@ varrying_map = {
     'inertia': [x/10 for x in range(1, 11)],
     'cognition': [x/10 for x in range(1, 41)],
     'social': [x/10 for x in range(1, 41)],
-    'tau': [x for x in range(1, 16, 1)],
+    'tau': [x for x in range(1, 11, 1)],
 }
 
 
@@ -38,4 +38,4 @@ for tau_value in varrying_map['tau']:
         print(row)
 
 df = pd.DataFrame(df_list, columns=columns)
-df.to_csv(f'500/R_tau_lower_phi_1.csv', index=False)
+df.to_csv(f'200/R_tau_lower_phi_1.csv', index=False)

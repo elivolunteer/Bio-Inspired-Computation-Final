@@ -67,6 +67,24 @@ class PSO:
         val=(1-x)**2+100*(y-x**2)**2
         # Booth Fucntion
         #val = (x+2*y-7)**2+(2*x+y-5)**2
+        # Drop Wave Function
+        #val = -((1+np.cos(12*np.sqrt(x**2+y**2)))/(0.5*(x**2+y**2)+2))
+        # Levy Function
+        #val = np.sin(3*np.pi*x)**2+(x-1)**2*(1+np.sin(3*np.pi*y)**2)+(y-1)**2*(1+np.sin(2*np.pi*y)**2)
+        # Rastrigin Function
+        #val = 20+np.power(x,2)-10*np.cos(2*np.pi*x)+np.power(y,2)-10*np.cos(2*np.pi*y)
+        # Shubert Function
+        # val = 0
+        # for i in range(1,6):
+        #     val += i*np.cos((i+1)*x+i)+i*np.cos((i+1)*y+i)
+        # Zakharov Function
+        #val = np.power(x,2)+np.power(y,2)-0.5*(np.cos(2*np.pi*x)+np.cos(2*np.pi*y))+0.5
+        # Three Hump Camel Function
+        #val = 2*x**2-1.05*x**4+np.power(x,6)/6+x*y+y**2
+        # Beale Function
+        #val = (1.5-x+x*y)**2+(2.25-x+x*y**2)**2+(2.625-x+x*y**3)**2
+        # Goldstein-Price Function
+        #val = (1+(x+y+1)**2*(19-14*x+3*x**2-14*y+6*x*y+3*y**2))*(30+(2*x-3*y)**2*(18-32*x+12*x**2+48*y-36*x*y+27*y**2))
 
         return val
     
@@ -108,7 +126,7 @@ for k in d.keys():
 # Create PSO
 pso = PSO(args.num_particles, args.inertia, args.cognition, args.social, 100, 100, 2, args.tau)
 
-for i in range(500):
+for i in range(200):
     print("epoch:", i)
     pso.update()
     x,y = pso.scatter_plot()
